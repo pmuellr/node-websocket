@@ -1,0 +1,59 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <title>node-websocket</title>
+<head>
+
+<body>
+  <h1>node-websocket</h1>
+  <pre id="console">
+  </pre>
+</body>
+
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script>
+$(onLoad)
+
+var ws
+var console
+
+function onLoad() {
+  console = $("#console")
+
+  var proto = (location.protocol == "http:") ? "ws:" : "wss:"
+  ws = new WebSocket(proto + "//" + location.host, 'echo-protocol')
+
+  ws.onopen    = onOpen
+  ws.onerror   = onError
+  ws.onmessage = onMessage
+
+  setInterval(onTick, 1000)
+}
+
+function onOpen() {
+  log("websocket open")
+}
+
+function onError(err) {
+  log("error opening websocket: " + err)
+}
+
+function onMessage(event) {
+  log("recv: " + event.data)
+}
+
+function onTick() {
+  var msg = "it's " + new Date()
+  ws.send(msg)
+  log("send: " + msg)
+}
+
+function log(message) {
+  console.text(console.text() + "\n" + message)
+}
+
+</script>
+
+</html>
