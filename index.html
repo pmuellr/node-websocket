@@ -23,7 +23,8 @@ function onLoad() {
   console = $("#console")
 
   var proto = (location.protocol == "http:") ? "ws:" : "wss:"
-  ws = new WebSocket(proto + "//" + location.host, 'echo-protocol')
+  var url   = proto + "//" + location.host
+  ws = new WebSocket(url, 'echo-protocol')
 
   ws.onopen    = onOpen
   ws.onerror   = onError
@@ -37,7 +38,7 @@ function onOpen() {
 }
 
 function onError(err) {
-  log("error opening websocket: " + err)
+  log("error opening websocket: " + err.target.url)
 }
 
 function onMessage(event) {
